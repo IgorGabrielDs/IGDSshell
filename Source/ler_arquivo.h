@@ -5,6 +5,6 @@
 #include "lista.h"
 #include "inserir_lista.h"
 
-void ler_arquivo(int argc, char *argv[], FILE *arquivo, Node **head);
+void ler_arquivo(int argc, char *argv[], Node **head);
 
 #endif

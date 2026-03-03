@@ -3,7 +3,7 @@
 
 typedef struct node
 {
-    char *texto;
+    char texto[100];
     struct node *proximo;
 }Node;
 
