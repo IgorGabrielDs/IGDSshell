@@ -1,5 +1,5 @@
-#ifndef LER_ARQUIVO_H
-#define LER_ARQUIVO_H
+#ifndef ARQUIVO_H
+#define ARQUIVO_H
 
 #include <stdio.h>
 #include "lista.h"
