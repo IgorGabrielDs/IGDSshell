@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "lista.h"
+#include "input.h"
 
 void ler_arquivo(int argc, char *argv[]){
     for(int i=1;i<argc;i++){
@@ -14,7 +15,7 @@ void ler_arquivo(int argc, char *argv[]){
         while(fgets(aux, sizeof(aux), arquivo) != NULL){
             inserir_lista(&head, aux);
         }
-        //input
+        input_arquivo(head);
         fclose(arquivo);
     }
 }
