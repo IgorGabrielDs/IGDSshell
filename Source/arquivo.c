@@ -3,19 +3,23 @@
 #include "lista.h"
 #include "input.h"
 #include <string.h>
-
-
+void printar(Node *head){
+    while (head != NULL)
+    {
+        printf("%s", head->texto);
+        head = head->proximo;
+    }
+    
+}
 void ler_arquivo(int argc, char *argv[]){
-    for(int i=1;i<argc;i++){
-        Node *frases = NULL;
-        Node *palavras = NULL;
+    Node *frases = NULL;
+    Node *palavras = NULL;
 
-        FILE *arquivo = fopen(argv[i], "r");
-        
-        if(arquivo == NULL){
-            printf("Erro ao abrir arquivo %s\n", argv[i]);
-            continue;
-        }   
+    FILE *arquivo = fopen(argv[1], "r");
+    
+    if(arquivo == NULL){
+        printf("Erro ao abrir arquivo %s\n", argv[1]);
+    }else{
         char aux[100];
         while(fgets(aux, sizeof(aux), arquivo) != NULL){
             if(strcmp(aux, "\n") == 0) {
@@ -32,9 +36,8 @@ void ler_arquivo(int argc, char *argv[]){
                     modificado = strtok(NULL, " \n");
                 }
             }
-        }
-        
-        //input(frases, palavras);
-        fclose(arquivo);
     }
+    }
+    input(frases, palavras);
+    fclose(arquivo);
 }

@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/wait.h>
+#include <unistd.h>
 #include "arquivo.h"
 #include "input.h"
+
 
 char style[4] = "seq";
 
