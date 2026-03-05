@@ -3,6 +3,6 @@
 
 #include "lista.h"
 
-void input(Node *frases, Node *palavras);
+void input(Node *palavras);
 
 #endif
