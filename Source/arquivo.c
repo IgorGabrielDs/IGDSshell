@@ -8,8 +8,8 @@ void ler_arquivo(int argc, char *argv[]){
     FILE *arquivo = fopen(argv[1], "r");
 
     if (arquivo == NULL){
-        printf("\x1b[1mIgds \x1b[32m%s\x1b[0m> Erro ao abrir arquivo \"%s\"\n", style, argv[1]);
-        return;
+        printf("\x1b[1;37mIgds \x1b[1;32m%s\x1b[1;37m> \x1b[1;31mErro ao abrir arquivo \"%s\"\x1b[0m\n", style, argv[1]);
+        exit(1);
     }
 
     char aux[200];

@@ -9,23 +9,6 @@
 #include "input.h"
 #include "arquivo.h"
 
-char **input_palavra(char *comando){
-    char **palavras = NULL;
-    int qtd = 0;
-
-    char copia[200];
-    strcpy(copia, comando);
-
-    char *token = strtok(copia, " \t\n");
-
-    while (token != NULL){
-        inserir_lista(&palavras, &qtd, token);
-        token = strtok(NULL, " \t\n");
-    }
-
-    return palavras;
-}
-
 void input_linha(char *linha){
     char copia[200];
     strcpy(copia, linha);
@@ -64,7 +47,25 @@ void input_linha(char *linha){
     }
 }
 
+char **input_palavra(char *comando){
+    char **palavras = NULL;
+    int qtd = 0;
+
+    char copia[200];
+    strcpy(copia, comando);
+
+    char *token = strtok(copia, " \t\n");
+
+    while (token != NULL){
+        inserir_lista(&palavras, &qtd, token);
+        token = strtok(NULL, " \t\n");
+    }
+
+    return palavras;
+}
+
 pid_t input_codigo(char **palavras){
+    
     if (palavras == NULL || palavras[0] == NULL){
         return -1;
     }
