@@ -25,13 +25,11 @@ void ler_arquivo(int argc, char *argv[]){
         return;
     }
     char aux[100];
-    printf("%s:\n", argv[1]);
     while(fgets(aux, sizeof(aux), arquivo) != NULL){
         Node *palavras = NULL;
         if(strcmp(aux, "\n") == 0){
             continue;
         }
-        printf("%s", aux);
         aux[strcspn(aux, "\n")] = '\0';
         if(strcmp(aux, "") == 0){
             continue;
