@@ -6,5 +6,6 @@
 void input_linha(char *linha);
 char **input_palavra(char *comando);
 pid_t input_codigo(char **palavras);
+void remover_espacos_finais(char *texto);
 
 #endif

@@ -1,4 +1,4 @@
-all = Objects/main.o Objects/arquivo.o Objects/inserir_lista.o Objects/input.o Objects/executar.o
+all = Objects/main.o Objects/arquivo.o Objects/inserir_lista.o Objects/input.o Objects/executar.o Objects/jobs.o
 
 igds: $(all)
 	gcc -IInclude $(all) -o igds
@@ -18,3 +18,5 @@ Objects/input.o: Source/input.c
 Objects/executar.o: Source/executar.c
 	gcc -IInclude -c Source/executar.c -o Objects/executar.o
 
+Objects/jobs.o: Source/jobs.c
+	gcc -IInclude -c Source/jobs.c -o Objects/jobs.o

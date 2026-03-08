@@ -1,3 +1,0 @@
-style parallel
-smt
-rola

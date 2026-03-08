@@ -8,6 +8,7 @@
 #include "executar.h"
 #include "input.h"
 #include "arquivo.h"
+#include "jobs.h"
 
 char **input_palavra(char *comando){
     char **palavras = NULL;
@@ -42,6 +43,16 @@ pid_t input_codigo(char **palavras){
         return -1;
     }
 
+    if (strcmp(palavras[0], "fg") == 0){
+        if (palavras[1] == NULL){
+            printf("\x1b[1;37mIgds \x1b[1;32m%s \x1b[1;37m> \x1b[1;31mfg: argumento faltando\x1b[0m\n", style);
+        }
+        else{
+            trazer_fg(atoi(palavras[1]));
+        }
+        return -1;
+    }
+
     if (strcmp(palavras[0], "exit") == 0){
         exit(0);
     }
@@ -49,7 +60,14 @@ pid_t input_codigo(char **palavras){
     return executar_comandos(palavras);
 }
 
+void remover_espacos_finais(char *texto){
+    int i = strlen(texto) - 1;
 
+    while (i >= 0 && (texto[i] == ' ' || texto[i] == '\t' || texto[i] == '\n')){
+        texto[i] = '\0';
+        i--;
+    }
+}
 
 void input_linha(char *linha){
     char copia_linha[200];
@@ -62,13 +80,41 @@ void input_linha(char *linha){
     char *comando_atual = strtok_r(copia_linha, ";", &contexto_comando);
 
     while (comando_atual != NULL){
+        verificar_jobs();
+
+        remover_espacos_finais(comando_atual);
+
+        if (strchr(comando_atual, '|') != NULL){
+            executar_pipe(comando_atual);
+            comando_atual = strtok_r(NULL, ";", &contexto_comando);
+            continue;
+        }
+
+        if (strchr(comando_atual, '>') != NULL || strchr(comando_atual, '<') != NULL){
+            executar_redirecionamento(comando_atual);
+            comando_atual = strtok_r(NULL, ";", &contexto_comando);
+            continue;
+        }
+
+        int background = 0;
+        int tam = strlen(comando_atual);
+
+        if (tam > 0 && comando_atual[tam - 1] == '&'){
+            background = 1;
+            comando_atual[tam - 1] = '\0';
+            remover_espacos_finais(comando_atual);
+        }
+
         char **palavras = input_palavra(comando_atual);
 
         if (palavras != NULL && palavras[0] != NULL){
             pid_t pid = input_codigo(palavras);
 
             if (pid > 0){
-                if (strcmp(style, "seq") == 0){
+                if (background){
+                    adicionar_job(pid, comando_atual);
+                }
+                else if (strcmp(style, "seq") == 0){
                     waitpid(pid, NULL, 0);
                 }
                 else if (strcmp(style, "par") == 0){
